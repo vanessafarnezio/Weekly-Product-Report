@@ -1,6 +1,4 @@
 // src/reporter.js
-// Calls Claude to generate the weekly report from Linear 
-
 const ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages";
 
 function getWeekRange(lookbackDays) {
@@ -27,8 +25,6 @@ async function generateReport(linearData, lookbackDays = 7) {
     })
     .join("\n\n");
 
-
-
   const prompt = `You are writing a weekly product update for Jeeves's customer-facing teams (CS, Sales, Account Management).
 Your goal: help them understand what changed in the product this week so they can better support clients.
 
@@ -45,34 +41,30 @@ FORMAT RULES (follow exactly):
 
 3. Group issues by product area. For each area with relevant items, use this exact structure:
 
-*🪙 Wallet 💳 Wallet & Stablecoin Stablecoin*
-• [plain description of what was fixed — 1 line]
-• [next fix]
+*🪙 Wallet & Stablecoin*
+- [plain description of what was fixed — 1 line]
 
 Only include areas that have actual fixes. Skip entire area sections if there are no relevant client-facing fixes.
 No sub-section headers needed — just bullet points directly under the area header.
 
 Use these area headers (pick only the ones with content):
-• *🪙 Wallet & Stablecoin* — WAL team
-• *💸 Payments* — PAY team
-• *💳 Cards & Expense Management* — CARDS + Megapod cards/expenses
-• *🤖 AI & Automation* — AI/ML features
-• *🔒 Security* — SEC team
-• *⚙️ Platform* — infra only if noteworthy to clients
+- *🪙 Wallet & Stablecoin* — WAL team
+- *💸 Payments* — PAY team
+- *💳 Cards & Expense Management* — CARDS + Megapod cards/expenses
+- *🤖 AI & Automation* — AI/ML features
+- *🔒 Security* — SEC team
+- *⚙️ Platform* — infra only if noteworthy to clients
 
 4. End with exactly this line, nothing else:
 #productfixes
 
 ---
 CONTENT RULES:
-- All issues → write as a plain description of what was fixed, no "Fixed:" prefix
+- Write as a plain description of what was fixed, no "Fixed:" prefix
 - Focus only on changes that directly impact clients or CS team workflows
 - Skip purely internal tickets: DB migrations, node upgrades, infra tasks, spikes, QA tickets
 - Merge very similar tickets into one bullet
 - Max ~20 lines total — keep it short
-- Skip purely internal tickets: DB migrations, node upgrades, i18n sync, infra tasks with zero client impact
-- Merge very similar tickets into one bullet
-- Max ~35 lines total
 
 Linear issues completed this week:
 ${linearSummary}
