@@ -1,5 +1,5 @@
 // src/reporter.js
-// Calls Claude to generate the weekly report from Linear + Notion data
+// Calls Claude to generate the weekly report from Linear 
 
 const ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages";
 
