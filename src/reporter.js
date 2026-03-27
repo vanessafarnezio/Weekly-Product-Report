@@ -1,5 +1,5 @@
 // src/reporter.js
-// Calls Claude to generate the weekly report from Linear + Notion data
+// Calls Claude to generate the weekly report from Linear 
 
 const ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages";
 
@@ -27,9 +27,7 @@ async function generateReport(linearData, lookbackDays = 7) {
     })
     .join("\n\n");
 
-  const notionSummary = notionPages
-    .map((p) => `- ${p.title}`)
-    .join("\n");
+
 
   const prompt = `You are writing a weekly product update for Jeeves's customer-facing teams (CS, Sales, Account Management).
 Your goal: help them understand what changed in the product this week so they can better support clients.
